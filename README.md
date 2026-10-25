@@ -45,20 +45,21 @@ Python 3.9 or later with the packages in `requirements.txt`, and R 4.x with the 
 
 The data are patient-level records from the program's clinical, device, and payer systems, extracted on September 6, 2026.
 Direct identifiers were removed; dates are retained, so the files form a limited data set. They are not publicly available to
-protect patient information; the manuscript's data availability statement describes access. The notebook reads the files below from `data/` (or from the folder named by the environment variable
-`RWE_DATA_DIR`). Every file is keyed on `PATIENT_ID`, a coded patient key; only the listed columns are used.
+protect patient information; the manuscript's data availability statement describes access. The notebook reads the files below
+from `data/` (or from the folder named by the environment variable `RWE_DATA_DIR`). The files are linked by a coded patient
+identifier.
 
-| File | Columns used |
+| File | Contents |
 |---|---|
-| `rwe_uefm.csv` | `PATIENT_ID`, `SCORE_TIMELINE` (`baseline` marks the baseline assessment), `SCORE_DATE`, `UEFM` |
-| `rwe_patient.csv` | `PATIENT_ID`, `AGE`, `GENDER`, `DATE_OF_STROKE`, `DATE_OF_STROKE_PRECISION` (`day`, `month`, or `year`), `SIDE_AFFECTED`, `SDI_SCORE` (Social Deprivation Index), `PAYER_TYPE_PRIMARY`, `FIRST_RX_RECEIVED_DATE`, `FIRST_DEVICE_SHIP_DATE`, `FIRST_SALES_ORDER_SHIP_DATE`, `ANY_SALES_ORDER_DELIVERED`, `FIRST_DEVICE_ASSIGNED_DATE`, `LAST_DEVICE_ASSOCIATION_ENDED_DATE`, `N_OPEN_DEVICE_ASSOCIATIONS`, `LAST_RENTAL_END_DATE`, `N_ACTIVE_RENTAL_SESSIONS` |
-| `rwe_device_sessions.csv` | `PATIENT_ID`, `SESSION_START`, `DURATION_SECONDS` |
-| `rwe_prescribed.csv` | `PATIENT_ID`, `FIRST_RX_RECEIVED_DATE`, `DEVICE_RECEIVED` |
-| `rwe_patient_core.csv` | `PATIENT_ID`, `DOMINANT_HAND` |
-| `mde_review_deidentified.csv` | `PATIENT_ID`, `MDE?` (clinical review of significant detrimental medical events: `No MDE present`, blank when not yet reviewed, otherwise the confirmed event) |
-| `rwe_prescribed_dropoff.csv` | `PATIENT_ID`, `PAYER_TYPE_PRIMARY_LIVE` (payer on the insurance case), `PAYER_TYPE_OPPORTUNITY` (payer on the case record) |
-| `prescribed_dropoff_reasons_2026-09-14.csv` | `PATIENT_ID`, `REASON_BIN`: why a prescribed patient did not receive a device (`A` payer denial or coverage barrier; `B` screening or clinical ineligibility; `C` patient withdrew or was non-responsive; `D` documentation or administrative step not completed; `E` case open without a payer decision; `F` closed without a recorded reason; `R` device received) |
-| `recipient_flow_step_eeg_status_2026-09-14.csv` | `PATIENT_ID`, `EEG_SCREEN_STATUS`: pre-therapy EEG screen of device recipients (`F` failed; `X` failed, then passed a retest; `P` passed; `H` held without a recorded result; `N` no screen on record) |
+| `rwe_uefm.csv` | UEFM assessments: the date and total score of each assessment, and which assessment is the patient's baseline |
+| `rwe_patient.csv` | Patients who received a device or had a UEFM assessment: age, sex, date of stroke, affected side, Social Deprivation Index, primary payer, and the dates of prescription, device shipment, device assignment, and rental |
+| `rwe_device_sessions.csv` | Therapy sessions logged by the device: the start time and duration of each session |
+| `rwe_prescribed.csv` | Patients prescribed the IpsiHand system: the date of the first prescription and whether a device was received |
+| `rwe_patient_core.csv` | The dominant hand of each patient |
+| `mde_review_deidentified.csv` | The clinical review of significant detrimental medical events, which identifies the patients excluded for such an event |
+| `rwe_prescribed_dropoff.csv` | The primary payer recorded for each prescribed patient |
+| `prescribed_dropoff_reasons_2026-09-14.csv` | For each prescribed patient, whether a device was received and, if not, the reason |
+| `recipient_flow_step_eeg_status_2026-09-14.csv` | The result of each device recipient's pre-therapy electroencephalography (EEG) screen |
 
 ## Run
 
